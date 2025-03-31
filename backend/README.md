@@ -94,3 +94,40 @@ Django is the perfect web framework for **DrawYourWay** because it provides a so
 For a project like **DrawYourWay**, Django provides the best combination of **speed, security, scalability, and built-in features**. Python's ease of use makes development faster, while Django’s robust framework ensures stability and security. Compared to other languages and frameworks, Python and Django **offer the best balance between rapid development and long-term scalability**.
 
 Whether for quick prototyping or long-term growth, Django is the ideal choice for building a **feature-rich, high-performance drawing application**.
+
+## **3. How to Set Up and Run DrawYourWay Locally**
+
+Follow these steps to set up and run the project on your local machine.
+
+### **Step 1: Clone the Repository And Go To the Right Folder**
+
+```bash
+git clone https://github.com/DrawYourWay/DrawYourWay_Project.git
+cd backend
+```
+
+### **Step 2: Set Up a Virtual Environment**
+
+```bash
+python -m venv .venv
+git clone https://github.com/DrawYourWay/DrawYourWay_Project.git
+```
+
+### **Step 3: Install Dependencies And Activate Virtual Environment**
+
+```bash
+source .venv/bin/activate
+pip install -r requirements.txt
+```
+
+### **Step 4: Configure the Database**
+
+```bash
+python manage.py migrate
+```
+
+### **Step 5: Run the Development Server**
+
+```bash
+python manage.py runserver
+```

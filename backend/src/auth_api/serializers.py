@@ -1,4 +1,5 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from rest_framework import serializers
 
 User = get_user_model()
@@ -26,3 +27,48 @@ class RegisterSerializer(serializers.Serializer):
         new_user.save()
 
         return new_user
+
+
+class ResetPasswordSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        user = User.objects.filter(email=email)
+
+        if not user.exists():
+            raise serializers.ValidationError({"email": "Email does not exist."})
+
+        self.user = user.first()
+
+        return attrs
+
+
+class NewPasswordSerializer(serializers.Serializer):
+    token = serializers.CharField()
+    email = serializers.EmailField()
+    password = serializers.CharField()
+    password2 = serializers.CharField()
+
+    def validate(self, attrs):
+        email = attrs.get("email")
+        user = User.objects.filter(email=email)
+
+        if not user.exists():
+            raise serializers.ValidationError({"email": "Email does not exist."})
+
+        self.user = user.first()
+
+        token = attrs.get("token")
+        is_token_correct = PasswordResetTokenGenerator().check_token(user, token)
+        if not is_token_correct:
+            raise serializers.ValidationError(
+                {"token": "Incorrect password reset token."}
+            )
+
+        password, password2 = attrs.get("password"), attrs.get("password2")
+
+        if password != password2:
+            raise serializers.ValidationError({"password": "Passwords do not match."})
+
+        return attrs

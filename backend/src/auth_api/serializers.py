@@ -60,7 +60,7 @@ class NewPasswordSerializer(serializers.Serializer):
         self.user = user.first()
 
         token = attrs.get("token")
-        is_token_correct = PasswordResetTokenGenerator().check_token(user, token)
+        is_token_correct = PasswordResetTokenGenerator().check_token(self.user, token)
         if not is_token_correct:
             raise serializers.ValidationError(
                 {"token": "Incorrect password reset token."}

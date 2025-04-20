@@ -37,7 +37,7 @@ export const resetPassword = (email: string): Promise<ResetPasswordToken> => {
   return client.post("/auth/reset-password/", { email });
 };
 
-export const newPassword = (
+export const changePassword = (
   email: string,
   token: string,
   password: string,

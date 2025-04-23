@@ -8,7 +8,7 @@ interface BasicLayoutProps {
 
 const BasicLayout = ({ children }: BasicLayoutProps) => {
   return (
-    <VStack minH="100vh" minW="100vw" backgroundColor="#EBEBDF">
+    <VStack minH="100vh" minW="100vw" backgroundColor="main">
       <Image src={wavesImage} alt="Waves" width="400px" />
       {children}
     </VStack>

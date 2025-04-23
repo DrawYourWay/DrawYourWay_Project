@@ -1,5 +1,5 @@
 import { Box, Center, HStack, Image, Text } from "@chakra-ui/react";
-import { motion, useAnimation } from "framer-motion";
+import { motion } from "framer-motion";
 import logo from "/images/logo.png";
 
 const MotionBox = motion.create(Box);
@@ -35,11 +35,10 @@ const letterVariants = {
       repeatDelay: 6.5,
     },
   },
+  exit: {},
 };
 
 const TransitionLoader = () => {
-  const controls = useAnimation();
-
   return (
     <>
       <MotionBox
@@ -48,13 +47,12 @@ const TransitionLoader = () => {
         height="100vh"
         top={0}
         overflow="hidden"
-        bg="#EBEBDF"
+        bg="main"
         zIndex="9999"
-        animate={controls}
         exit={{
           opacity: 0,
           transition: {
-            duration: 0.75,
+            duration: 1,
             ease: "easeInOut",
           },
         }}
@@ -84,6 +82,7 @@ const TransitionLoader = () => {
           >
             {Array.from("Draw Your Way").map((char, index) => (
               <MotionText
+                font="main"
                 key={index}
                 variants={letterVariants}
                 fontSize="2xl"

@@ -1,15 +1,17 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router";
 import UnprotectedRoute from "./components/ProtectedRoute";
-import { Provider } from "./components/ui/provider";
+
+import { ChakraProvider } from "@chakra-ui/react";
 import { protectedRoutes } from "./Router";
+import theme from "./theme/theme";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Provider>
+      <ChakraProvider value={theme}>
         <BrowserRouter>
           <Routes>
             {protectedRoutes.map((route) => (
@@ -20,7 +22,7 @@ function App() {
             ))}
           </Routes>
         </BrowserRouter>
-      </Provider>
+      </ChakraProvider>
     </QueryClientProvider>
   );
 }

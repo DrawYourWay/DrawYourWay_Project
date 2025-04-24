@@ -39,11 +39,11 @@ export const useRegister = (
 export const useVerify = () =>
   useMutation({
     mutationFn: async () => {
-      const refreshToken = AuthService.getToken(AuthService.refreshTokenKey);
-      if (!refreshToken) {
+      const accessToken = AuthService.getToken(AuthService.accessTokenKey);
+      if (!accessToken) {
         throw new Error("No refresh token found");
       }
-      await verify(refreshToken);
+      await verify(accessToken);
     },
   });
 

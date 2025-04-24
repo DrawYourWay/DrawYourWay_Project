@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import TransitionLoader from "../TransitionLoader";
 import { useNavigate } from "react-router";
 
-interface ProtectedRouteProps {
+interface UnprotectedRouteProps {
   children: React.ReactNode;
 }
 
-const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
+const UnprotectedRoute = ({ children }: UnprotectedRouteProps) => {
   const [isLoading, setIsLoading] = useState(true);
   const { mutateAsync } = useVerify();
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     if (AuthService.getToken(AuthService.accessTokenKey)) {
       try {
         checkToken();
+        // navigate("/feed");
         setIsLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
@@ -42,4 +43,4 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   );
 };
 
-export default ProtectedRoute;
+export default UnprotectedRoute;

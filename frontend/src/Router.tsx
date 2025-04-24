@@ -12,3 +12,5 @@ export const unprotectedRoutes: Route[] = [
     element: <LoginPage />,
   },
 ];
+
+export const protectedRoutes: Route[] = [];

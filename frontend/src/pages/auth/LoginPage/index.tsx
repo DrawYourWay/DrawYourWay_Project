@@ -50,8 +50,6 @@ const LoginPage = () => {
     }
   }, [error]);
 
-  console.log("error", error);
-
   return (
     <BasicLayout>
       <Box color="black">

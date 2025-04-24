@@ -1,4 +1,5 @@
 import { createSystem, defineConfig, defaultConfig } from "@chakra-ui/react";
+import "./fonts.css";
 
 const config = defineConfig({
   theme: {
@@ -7,7 +8,7 @@ const config = defineConfig({
         main: { value: "#EBEBDF" },
       },
       fonts: {
-        main: { value: "'Armstrong', sans-serif" }, // Użyj fontu Armstrong
+        main: { value: "'Armstrong', sans-serif" },
       },
     },
   },

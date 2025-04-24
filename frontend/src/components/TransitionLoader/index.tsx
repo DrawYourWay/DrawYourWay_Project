@@ -32,7 +32,7 @@ const letterVariants = {
       duration: 0.5,
       ease: "easeInOut",
       repeat: Infinity,
-      repeatDelay: 6.5,
+      repeatDelay: 5,
     },
   },
   exit: {},
@@ -51,8 +51,9 @@ const TransitionLoader = () => {
         zIndex="9999"
         exit={{
           opacity: 0,
+          y: [0, -30, 100],
           transition: {
-            duration: 1,
+            duration: 1.2,
             ease: "easeInOut",
           },
         }}
@@ -82,13 +83,13 @@ const TransitionLoader = () => {
           >
             {Array.from("Draw Your Way").map((char, index) => (
               <MotionText
-                font="main"
+                fontFamily="main"
                 key={index}
                 variants={letterVariants}
                 fontSize="2xl"
                 fontWeight="bold"
                 color="black"
-                margin="0 2px"
+                margin="0 -1px"
               >
                 {char}
               </MotionText>

@@ -53,7 +53,7 @@ const LoginPage = () => {
   return (
     <BasicLayout>
       <Box color="black">
-        <Heading as="h1" size="6xl" textAlign="center" mb={4} font="main">
+        <Heading as="h2" size="4xl" textAlign="center" mb={4} fontFamily="main">
           Draw Your Way
         </Heading>
         <Heading as="h2" size="xl" textAlign="center" mb={4}>

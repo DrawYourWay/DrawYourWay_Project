@@ -29,7 +29,7 @@ const UnprotectedRoute = ({ children }: UnprotectedRouteProps) => {
         /* empty */
       }
     } else {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   }, [isLoading]);
 

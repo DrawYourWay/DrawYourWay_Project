@@ -1,9 +1,9 @@
+import { Toaster } from "./components/ui/toaster";
+import { ChakraProvider } from "@chakra-ui/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router";
 import UnprotectedRoute from "./components/ProtectedRoute";
-
-import { ChakraProvider } from "@chakra-ui/react";
-import { protectedRoutes } from "./Router";
+import { unprotectedRoutes } from "./Router";
 import theme from "./theme/theme";
 
 const queryClient = new QueryClient();
@@ -14,10 +14,15 @@ function App() {
       <ChakraProvider value={theme}>
         <BrowserRouter>
           <Routes>
-            {protectedRoutes.map((route) => (
+            {unprotectedRoutes.map((route) => (
               <Route
                 path={route.path}
-                element={<UnprotectedRoute>{route.element}</UnprotectedRoute>}
+                element={
+                  <UnprotectedRoute>
+                    <Toaster />
+                    {route.element}
+                  </UnprotectedRoute>
+                }
               />
             ))}
           </Routes>

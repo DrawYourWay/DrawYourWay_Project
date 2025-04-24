@@ -1,17 +1,23 @@
+import AuthService from "@/services/TokenService";
 import { useMutation } from "@tanstack/react-query";
 import {
-  login,
-  register,
-  verify,
-  logOut,
-  resetPassword,
   changePassword,
+  login,
+  logOut,
+  register,
+  resetPassword,
+  verify,
 } from "../api/auth";
-import AuthService from "../services/TokenService";
 
-export const useLogin = (username: string, password: string) =>
+export const useLogin = () =>
   useMutation({
-    mutationFn: async () => {
+    mutationFn: async ({
+      username,
+      password,
+    }: {
+      username: string;
+      password: string;
+    }) => {
       const tokens = await login(username, password);
       AuthService.setTokens(tokens.access, tokens.refresh);
     },

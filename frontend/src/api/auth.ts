@@ -5,10 +5,12 @@ export const login = (
   username: string,
   password: string
 ): Promise<AuthTokens> => {
-  return client.post("/auth/login/", {
-    username,
-    password,
-  });
+  return client
+    .post("/auth/login/", {
+      username,
+      password,
+    })
+    .then((response) => response.data);
 };
 
 export const register = (
@@ -17,24 +19,30 @@ export const register = (
   password: string,
   password_confirm: string
 ): Promise<AuthTokens> => {
-  return client.post("/auth/register/", {
-    email,
-    login,
-    password,
-    password_confirm,
-  });
+  return client
+    .post("/auth/register/", {
+      email,
+      login,
+      password,
+      password_confirm,
+    })
+    .then((response) => response.data);
 };
 
 export const logOut = () => {
-  return client.post("/auth/logout/", {});
+  return client.post("/auth/logout/", {}).then((response) => response.data);
 };
 
 export const verify = (token: string) => {
-  return client.post("/auth/verify/", { token });
+  return client
+    .post("/auth/verify/", { token })
+    .then((response) => response.data);
 };
 
 export const resetPassword = (email: string): Promise<ResetPasswordToken> => {
-  return client.post("/auth/reset-password/", { email });
+  return client
+    .post("/auth/reset-password/", { email })
+    .then((response) => response.data);
 };
 
 export const changePassword = (
@@ -43,10 +51,12 @@ export const changePassword = (
   password: string,
   password2: string
 ) => {
-  return client.post("/auth/new-password/", {
-    token,
-    email,
-    password,
-    password2,
-  });
+  return client
+    .post("/auth/new-password/", {
+      token,
+      email,
+      password,
+      password2,
+    })
+    .then((response) => response.data);
 };

@@ -1,11 +1,10 @@
 import { z } from "zod";
 
 export const LoginFormSchema = z.object({
-  email: z
+  username: z
     .string()
-    .email("Invalid email address")
-    .min(1, "Email is required")
-    .max(255, "Email must be less than 255 characters"),
+    .min(1, "Username is required")
+    .max(255, "Username must be less than 255 characters"),
   password: z
     .string()
     .min(6, "Password must be at least 6 characters long")

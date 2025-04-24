@@ -6,7 +6,7 @@ interface Route {
   element: React.ReactNode;
 }
 
-export const protectedRoutes: Route[] = [
+export const unprotectedRoutes: Route[] = [
   {
     path: "/login",
     element: <LoginPage />,

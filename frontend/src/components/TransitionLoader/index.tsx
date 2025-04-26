@@ -83,7 +83,7 @@ const TransitionLoader = () => {
           >
             {Array.from("Draw Your Way").map((char, index) => (
               <MotionText
-                fontFamily="main"
+                fontFamily="armstrong"
                 key={index}
                 variants={letterVariants}
                 fontSize="2xl"

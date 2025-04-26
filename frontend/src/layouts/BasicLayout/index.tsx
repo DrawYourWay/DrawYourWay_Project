@@ -3,7 +3,7 @@ import { Image } from "@chakra-ui/react";
 import wavesImage from "/images/waves.png";
 
 interface BasicLayoutProps {
-  children: React.ReactElement[];
+  children: React.ReactNode;
 }
 
 const BasicLayout = ({ children }: BasicLayoutProps) => {

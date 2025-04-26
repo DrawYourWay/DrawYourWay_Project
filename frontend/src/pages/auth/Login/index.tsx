@@ -8,6 +8,7 @@ import {
   Field,
   Heading,
   Input,
+  Link,
   Stack,
   Text,
 } from "@chakra-ui/react";
@@ -15,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router";
 
 interface LoginForm {
   username: string;
@@ -29,12 +31,14 @@ const LoginPage = () => {
   } = useForm<LoginForm>({ resolver: zodResolver(LoginFormSchema) });
 
   const { mutateAsync, error, isPending } = useLogin();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync({
       username: data.username,
       password: data.password,
     });
+    navigate("/register");
   });
 
   useEffect(() => {
@@ -52,40 +56,74 @@ const LoginPage = () => {
 
   return (
     <BasicLayout>
-      <Box color="black">
-        <Heading as="h2" size="4xl" textAlign="center" mb={4} fontFamily="main">
+      <Box color="black" p={5}>
+        <Heading
+          as="h2"
+          size={["3xl", "4xl"]}
+          textAlign="center"
+          mb={[8, 12]}
+          fontFamily="armstrong"
+        >
           Draw Your Way
         </Heading>
-        <Heading as="h2" size="xl" textAlign="center" mb={4}>
+        <Heading
+          as="h2"
+          size={["xl", "2xl"]}
+          textAlign="center"
+          mb={4}
+          fontFamily="inter"
+        >
           Log in
         </Heading>
-        <Text textAlign="center">Don't have an account? Click here</Text>
+        <Text textAlign="center" fontSize={["lg", "xl"]}>
+          Don't have an account?{" "}
+          <Link variant="underline" color="link" href="/register">
+            Click here
+          </Link>
+        </Text>
       </Box>
 
-      <form onSubmit={onSubmit}>
-        <Stack
-          justifyContent="center"
-          alignItems="center"
-          color="red"
-          maxW="sm"
-        >
+      <form onSubmit={onSubmit} style={{ width: "100%", maxWidth: "300px" }}>
+        <Stack justifyContent="center" alignItems="center" color="red">
           <Field.Root invalid={!!errors.username}>
-            <Field.Label>Username</Field.Label>
-            <Input type="text" {...register("username")} />
+            <Input
+              type="text"
+              placeholder="Username"
+              {...register("username")}
+              size="xl"
+              backgroundColor="lightGray"
+              color="darkGray"
+            />
             <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
           </Field.Root>
 
           <Field.Root invalid={!!errors.password}>
-            <Field.Label>Password</Field.Label>
             <Input
               type="password"
               placeholder="Password"
               {...register("password")}
+              size="xl"
+              backgroundColor="lightGray"
+              color="darkGray"
             />
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
 
-          <Button type="submit" disabled={isPending}>
+          <Button
+            type="submit"
+            disabled={isPending}
+            loading={isPending}
+            loadingText="Logging in..."
+            backgroundColor="darkGray"
+            color="white"
+            fontSize="lg"
+            paddingTop={6}
+            paddingBottom={6}
+            width="80%"
+            mt={4}
+            fontWeight="bold"
+            borderRadius={30}
+          >
             Log In
           </Button>
         </Stack>

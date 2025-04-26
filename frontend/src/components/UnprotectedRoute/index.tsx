@@ -16,22 +16,23 @@ const UnprotectedRoute = ({ children }: UnprotectedRouteProps) => {
 
   useEffect(() => {
     const checkToken = async () => {
-      await mutateAsync();
+      try {
+        await mutateAsync();
+        navigate("/feed");
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      } catch (_) {
+        // Jeśli token jest niepoprawny, pokaż dzieci (np. stronę logowania)
+        setIsLoading(false);
+      }
     };
 
     if (AuthService.getToken(AuthService.accessTokenKey)) {
-      try {
-        checkToken();
-        // navigate("/feed");
-        setIsLoading(false);
-        // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      } catch (_) {
-        /* empty */
-      }
+      checkToken();
     } else {
-      setIsLoading(true);
+      setIsLoading(false);
     }
-  }, [isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

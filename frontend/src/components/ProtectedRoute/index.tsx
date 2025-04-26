@@ -2,8 +2,8 @@ import { useVerify } from "@/hooks/useAuth";
 import AuthService from "@/services/TokenService";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import TransitionLoader from "../TransitionLoader";
 import { useNavigate } from "react-router";
+import TransitionLoader from "../TransitionLoader";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -16,21 +16,24 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
 
   useEffect(() => {
     const checkToken = async () => {
-      await mutateAsync();
-    };
-
-    if (AuthService.getToken(AuthService.accessTokenKey)) {
       try {
-        checkToken();
+        await mutateAsync();
         setIsLoading(false);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
-        /* empty */
+        setIsLoading(false);
+        navigate("/login");
       }
+    };
+
+    if (AuthService.getToken(AuthService.accessTokenKey)) {
+      checkToken();
     } else {
       setIsLoading(false);
+      navigate("/login");
     }
-  }, [isLoading]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

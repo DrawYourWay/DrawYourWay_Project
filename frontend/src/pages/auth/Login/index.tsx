@@ -1,7 +1,7 @@
 import { toaster } from "@/components/ui/toaster";
 import { useLogin } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
-import { LoginFormSchema } from "@/types/forms/login";
+import { LoginFormSchema } from "@/types/forms/auth";
 import {
   Box,
   Button,
@@ -16,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 
 interface LoginForm {
   username: string;
@@ -31,20 +31,28 @@ const LoginPage = () => {
   } = useForm<LoginForm>({ resolver: zodResolver(LoginFormSchema) });
 
   const { mutateAsync, error, isPending } = useLogin();
+
   const navigate = useNavigate();
+  const location = useLocation();
+  const { welcome: shouldWelcome } = location.state || {};
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync({
       username: data.username,
       password: data.password,
     });
-    navigate("/register");
+    navigate("/feed");
   });
 
   useEffect(() => {
-    if (!error) return;
-
-    if (error instanceof AxiosError) {
+    if (shouldWelcome) {
+      toaster.create({
+        title: "Welcome",
+        description: "You have successfully registered. Log in to continue.",
+        type: "success",
+        duration: 5000,
+      });
+    } else if (error instanceof AxiosError) {
       toaster.create({
         title: "Error",
         description: error.response?.data.detail,
@@ -52,7 +60,7 @@ const LoginPage = () => {
         duration: 5000,
       });
     }
-  }, [error]);
+  }, [error, shouldWelcome]);
 
   return (
     <BasicLayout>

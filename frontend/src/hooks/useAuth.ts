@@ -23,17 +23,19 @@ export const useLogin = () =>
     },
   });
 
-export const useRegister = (
-  email: string,
-  login: string,
-  password: string,
-  password_confirm: string
-) =>
+export const useRegister = () =>
   useMutation({
-    mutationFn: async () => {
-      const tokens = await register(email, login, password, password_confirm);
-      AuthService.setTokens(tokens.access, tokens.refresh);
-    },
+    mutationFn: async ({
+      email,
+      login,
+      password,
+      password_confirm,
+    }: {
+      email: string;
+      login: string;
+      password: string;
+      password_confirm: string;
+    }) => await register(email, login, password, password_confirm),
   });
 
 export const useVerify = () =>

@@ -1,5 +1,5 @@
-import { LoginPage, RegisterPage } from "./pages";
 import { Route } from "react-router";
+import { LoginPage, RegisterPage, FeedPage } from "./pages";
 
 interface Route {
   path: string;
@@ -17,4 +17,9 @@ export const unprotectedRoutes: Route[] = [
   },
 ];
 
-export const protectedRoutes: Route[] = [];
+export const protectedRoutes: Route[] = [
+  {
+    path: "/feed",
+    element: <FeedPage />,
+  },
+];

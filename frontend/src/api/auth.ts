@@ -15,14 +15,14 @@ export const login = (
 
 export const register = (
   email: string,
-  login: string,
+  username: string,
   password: string,
   password_confirm: string
 ): Promise<AuthTokens> => {
   return client
     .post("/auth/register/", {
       email,
-      login,
+      username,
       password,
       password_confirm,
     })

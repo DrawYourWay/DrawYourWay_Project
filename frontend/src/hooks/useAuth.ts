@@ -58,24 +58,23 @@ export const useLogout = () =>
     },
   });
 
-export const usePasswordReset = (email: string) => {
+export const usePasswordReset = () =>
   useMutation({
-    mutationFn: async () => {
-      const { token } = await resetPassword(email);
-      return token;
-    },
+    mutationFn: async ({ email }: { email: string }) =>
+      await resetPassword(email),
   });
-};
 
-export const useChangePassword = (
-  email: string,
-  token: string,
-  password: string,
-  password2: string
-) =>
+export const useChangePassword = () =>
   useMutation({
-    mutationFn: async () => {
-      const success = await changePassword(email, token, password, password2);
-      return success;
-    },
+    mutationFn: async ({
+      email,
+      token,
+      password,
+      password2,
+    }: {
+      email: string;
+      token: string;
+      password: string;
+      password2: string;
+    }) => await changePassword(email, token, password, password2),
   });

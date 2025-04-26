@@ -21,12 +21,12 @@ const UnprotectedRoute = ({ children }: UnprotectedRouteProps) => {
         navigate("/feed");
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
-        // Jeśli token jest niepoprawny, pokaż dzieci (np. stronę logowania)
+        AuthService.deleteToken(AuthService.accessTokenKey);
         setIsLoading(false);
       }
     };
 
-    if (AuthService.getToken(AuthService.accessTokenKey)) {
+    if (AuthService.getToken(AuthService.accessTokenKey) !== null) {
       checkToken();
     } else {
       setIsLoading(false);

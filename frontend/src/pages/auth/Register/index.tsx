@@ -1,17 +1,9 @@
+import { AuthPageHeader } from "@/components";
 import { toaster } from "@/components/ui/toaster";
 import { useRegister } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
 import { RegisterFormSchema } from "@/types/forms/auth";
-import {
-  Box,
-  Button,
-  Field,
-  Heading,
-  Input,
-  Link,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Button, Field, Input, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
@@ -60,35 +52,14 @@ const RegisterPage = () => {
 
   return (
     <BasicLayout>
-      <Box color="black" p={5}>
-        <Heading
-          as="h2"
-          size={["3xl", "4xl"]}
-          textAlign="center"
-          mb={[8, 12]}
-          fontFamily="armstrong"
-        >
-          Draw Your Way
-        </Heading>
-        <Heading
-          as="h2"
-          size={["xl", "2xl"]}
-          textAlign="center"
-          mb={4}
-          fontFamily="inter"
-        >
-          Create your account
-        </Heading>
-        <Text textAlign="center" fontSize={["lg", "xl"]}>
-          Already have an account?{" "}
-          <Link variant="underline" color="link" href="/login">
-            Click here
-          </Link>
-        </Text>
-      </Box>
+      <AuthPageHeader
+        subtitle="Create your account"
+        preforwardText="Already have an account?"
+        forwardLink="/login"
+      />
 
       <form onSubmit={onSubmit} style={{ width: "100%", maxWidth: "300px" }}>
-        <Stack justifyContent="center" alignItems="center" color="red">
+        <Stack justifyContent="center" alignItems="center">
           <Field.Root invalid={!!errors.username}>
             <Input
               type="email"

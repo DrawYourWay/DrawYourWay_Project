@@ -1,5 +1,5 @@
 import { Route } from "react-router";
-import { LoginPage, RegisterPage, FeedPage } from "./pages";
+import { LoginPage, RegisterPage, FeedPage, ForgetPasswordPage } from "./pages";
 
 interface Route {
   path: string;
@@ -14,6 +14,10 @@ export const unprotectedRoutes: Route[] = [
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/forget-password",
+    element: <ForgetPasswordPage />,
   },
 ];
 

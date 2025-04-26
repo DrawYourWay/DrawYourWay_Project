@@ -1,22 +1,14 @@
+import { AuthPageHeader } from "@/components";
 import { toaster } from "@/components/ui/toaster";
 import { useLogin } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
 import { LoginFormSchema } from "@/types/forms/auth";
-import {
-  Box,
-  Button,
-  Field,
-  Heading,
-  Input,
-  Link,
-  Stack,
-  Text,
-} from "@chakra-ui/react";
+import { Box, Button, Field, Input, Link, Stack } from "@chakra-ui/react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate, useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 interface LoginForm {
   username: string;
@@ -34,9 +26,12 @@ const LoginPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { welcome: shouldWelcome } = location.state || {};
+  const { welcome: shouldWelcome, passwordReset: isResetPassword } =
+    location.state || {};
 
   const onSubmit = handleSubmit(async (data) => {
+    location.state.welcome = false;
+    location.state.passwordReset = false;
     await mutateAsync({
       username: data.username,
       password: data.password,
@@ -52,6 +47,13 @@ const LoginPage = () => {
         type: "success",
         duration: 5000,
       });
+    } else if (isResetPassword) {
+      toaster.create({
+        title: "Password Reset",
+        description: "Your password has been reset. Log in to continue.",
+        type: "success",
+        duration: 5000,
+      });
     } else if (error instanceof AxiosError) {
       toaster.create({
         title: "Error",
@@ -64,35 +66,14 @@ const LoginPage = () => {
 
   return (
     <BasicLayout>
-      <Box color="black" p={5}>
-        <Heading
-          as="h2"
-          size={["3xl", "4xl"]}
-          textAlign="center"
-          mb={[8, 12]}
-          fontFamily="armstrong"
-        >
-          Draw Your Way
-        </Heading>
-        <Heading
-          as="h2"
-          size={["xl", "2xl"]}
-          textAlign="center"
-          mb={4}
-          fontFamily="inter"
-        >
-          Log in
-        </Heading>
-        <Text textAlign="center" fontSize={["lg", "xl"]}>
-          Don't have an account?{" "}
-          <Link variant="underline" color="link" href="/register">
-            Click here
-          </Link>
-        </Text>
-      </Box>
+      <AuthPageHeader
+        subtitle="Log in"
+        preforwardText="Don't have an account?"
+        forwardLink="/register"
+      />
 
       <form onSubmit={onSubmit} style={{ width: "100%", maxWidth: "300px" }}>
-        <Stack justifyContent="center" alignItems="center" color="red">
+        <Stack justifyContent="center" alignItems="center">
           <Field.Root invalid={!!errors.username}>
             <Input
               type="text"
@@ -116,6 +97,16 @@ const LoginPage = () => {
             />
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
+
+          <Box alignSelf="start" paddingTop={6}>
+            <Link
+              textAlign="left"
+              textDecoration="underline"
+              href="/forget-password"
+            >
+              Did you forget your password?
+            </Link>
+          </Box>
 
           <Button
             type="submit"

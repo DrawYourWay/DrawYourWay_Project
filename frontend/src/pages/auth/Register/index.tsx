@@ -1,4 +1,4 @@
-import { AuthPageHeader } from "@/components";
+import { PageHeader } from "@/components";
 import { toaster } from "@/components/ui/toaster";
 import { useRegister } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
@@ -52,7 +52,7 @@ const RegisterPage = () => {
 
   return (
     <BasicLayout>
-      <AuthPageHeader
+      <PageHeader
         subtitle="Create your account"
         preforwardText="Already have an account?"
         forwardLink="/login"
@@ -68,6 +68,7 @@ const RegisterPage = () => {
               size="xl"
               backgroundColor="lightGray"
               color="darkGray"
+              borderBottom="0.5px solid"
             />
             <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
           </Field.Root>
@@ -92,6 +93,7 @@ const RegisterPage = () => {
               size="xl"
               backgroundColor="lightGray"
               color="darkGray"
+              borderBottom="0.5px solid"
             />
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>
@@ -104,6 +106,7 @@ const RegisterPage = () => {
               size="xl"
               backgroundColor="lightGray"
               color="darkGray"
+              borderBottom="0.5px solid"
             />
             <Field.ErrorText>{errors.password2?.message}</Field.ErrorText>
           </Field.Root>

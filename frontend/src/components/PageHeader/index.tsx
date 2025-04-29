@@ -1,16 +1,16 @@
 import { Box, Heading, Text, Link } from "@chakra-ui/react";
 
-interface AuthPagesHeaderProps {
+interface PagesHeaderProps {
   subtitle: string;
   preforwardText?: string;
   forwardLink?: string;
 }
 
-const AuthPageHeader = ({
+const PageHeader = ({
   subtitle,
   preforwardText,
   forwardLink,
-}: AuthPagesHeaderProps) => {
+}: PagesHeaderProps) => {
   return (
     <Box color="black" p={5}>
       <Heading
@@ -48,4 +48,4 @@ const AuthPageHeader = ({
   );
 };
 
-export default AuthPageHeader;
+export default PageHeader;

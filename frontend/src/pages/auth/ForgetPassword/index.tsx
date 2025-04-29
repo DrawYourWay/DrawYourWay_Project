@@ -1,4 +1,4 @@
-import { AuthPageHeader } from "@/components";
+import { PageHeader } from "@/components";
 import { toaster } from "@/components/ui/toaster";
 import { useChangePassword, usePasswordReset } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
@@ -94,13 +94,13 @@ const ForgetPassword = () => {
   return (
     <BasicLayout>
       {!isCodeStep ? (
-        <AuthPageHeader
+        <PageHeader
           subtitle="Forget password"
           preforwardText="Don't need it anymore?"
           forwardLink="/login"
         />
       ) : (
-        <AuthPageHeader subtitle="Change password" />
+        <PageHeader subtitle="Change password" />
       )}
 
       {/* Krok 1: Formularz wysyłania maila */}

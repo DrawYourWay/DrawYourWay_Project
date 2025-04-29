@@ -1,4 +1,4 @@
-import { AuthPageHeader } from "@/components";
+import { PageHeader } from "@/components";
 import { toaster } from "@/components/ui/toaster";
 import { useLogin } from "@/hooks/useAuth";
 import { BasicLayout } from "@/layouts";
@@ -30,8 +30,13 @@ const LoginPage = () => {
     location.state || {};
 
   const onSubmit = handleSubmit(async (data) => {
-    location.state.welcome = false;
-    location.state.passwordReset = false;
+    if (location.state?.welcome) {
+      location.state.welcome = false;
+    }
+    if (location.state?.passwordReset) {
+      location.state.passwordReset = false;
+    }
+
     await mutateAsync({
       username: data.username,
       password: data.password,
@@ -66,7 +71,7 @@ const LoginPage = () => {
 
   return (
     <BasicLayout>
-      <AuthPageHeader
+      <PageHeader
         subtitle="Log in"
         preforwardText="Don't have an account?"
         forwardLink="/register"
@@ -82,6 +87,7 @@ const LoginPage = () => {
               size="xl"
               backgroundColor="lightGray"
               color="darkGray"
+              borderBottom="0.5px solid"
             />
             <Field.ErrorText>{errors.username?.message}</Field.ErrorText>
           </Field.Root>
@@ -94,6 +100,7 @@ const LoginPage = () => {
               size="xl"
               backgroundColor="lightGray"
               color="darkGray"
+              borderBottom="0.5px solid"
             />
             <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
           </Field.Root>

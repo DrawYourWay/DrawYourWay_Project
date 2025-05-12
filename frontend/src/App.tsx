@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
@@ -6,34 +7,43 @@ import './App.css'
 import { Route } from 'react-router-dom'
 
 <Route path="/feed" element={<Feed />} />
+=======
+import { Route, Routes } from "react-router";
+import { ProtectedRoute, UnprotectedRoute } from "./components";
+import { Toaster } from "./components/ui/toaster";
+import Providers from "./Providers";
+import { protectedRoutes, unprotectedRoutes } from "./Router";
+>>>>>>> main
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Providers>
+      <Routes>
+        {unprotectedRoutes.map((route) => (
+          <Route
+            path={route.path}
+            element={
+              <UnprotectedRoute>
+                <Toaster />
+                {route.element}
+              </UnprotectedRoute>
+            }
+          />
+        ))}
+        {protectedRoutes.map((route) => (
+          <Route
+            path={route.path}
+            element={
+              <ProtectedRoute>
+                <Toaster />
+                {route.element}
+              </ProtectedRoute>
+            }
+          />
+        ))}
+      </Routes>
+    </Providers>
+  );
 }
 
-export default App
+export default App;

@@ -12,7 +12,7 @@ from .serializers import (
 
 
 class NoPermAuthView(APIView):
-    authentication_classes = ()
+    authentication_classes = []
     permission_classes = (AllowAny,)
 
 

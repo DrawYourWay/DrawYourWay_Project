@@ -1,7 +1,11 @@
 import { useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import Feed from './pages/dashboard/Feed/index.tsx'
 import './App.css'
+import { Route } from 'react-router-dom'
+
+<Route path="/feed" element={<Feed />} />
 
 function App() {
   const [count, setCount] = useState(0)

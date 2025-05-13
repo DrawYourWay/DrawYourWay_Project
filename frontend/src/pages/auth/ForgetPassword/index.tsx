@@ -95,7 +95,7 @@ const ForgetPassword = () => {
     <BasicLayout>
       {!isCodeStep ? (
         <PageHeader
-          subtitle="Forget password"
+          subtitle="Forgot password?"
           preforwardText="Don't need it anymore?"
           forwardLink="/login"
         />

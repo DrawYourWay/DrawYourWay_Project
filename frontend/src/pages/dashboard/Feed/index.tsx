@@ -1,11 +1,13 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { getFeeds, createFeed, updateFeed, deleteFeed } from '../../../services/feedService';
+import { BasicLayout } from '@/layouts';
 
-// Define the Feed type based on your backend model
+
 interface FeedType {
   id: number;
   title: string;
   content: string;
+  drawingUrl?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -45,8 +47,17 @@ const Feed: React.FC = () => {
   };
 
   return (
+    <BasicLayout useImage={true}>
     <div>
-      <h1>Feed</h1>
+      <h2 style={{
+    textAlign: "center",
+    marginBottom: "2rem",
+    fontFamily: "armstrong",
+    fontSize: "2.5rem",
+    color: "black",
+  }}>
+    Draw Your Way
+  </h2>
       <div>
         <input
           type="text"
@@ -63,17 +74,26 @@ const Feed: React.FC = () => {
         />
         <button onClick={handleCreate}>Create Feed</button>
       </div>
-      <ul>
-        {feeds.map((feed) => (
-          <li key={feed.id}>
-            <h2>{feed.title}</h2>
-            <p>{feed.content}</p>
-            <button onClick={() => handleUpdate(feed.id)}>Update</button>
-            <button onClick={() => handleDelete(feed.id)}>Delete</button>
-          </li>
-        ))}
-      </ul>
-    </div>
+       <ul className="feed-list">
+          {feeds.map((feed) => (
+            <li key={feed.id} className="feed-item">
+              <h2>{feed.title}</h2>
+              <p>{feed.content}</p>
+              {/* Display drawing if available */}
+              {feed.drawingUrl && (
+                <img
+                  src={feed.drawingUrl}
+                  alt={`Drawing for ${feed.title}`}
+                  className="feed-drawing"
+                />
+              )}
+              <button onClick={() => handleUpdate(feed.id)}>Update</button>
+              <button onClick={() => handleDelete(feed.id)}>Delete</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </BasicLayout>
   );
 };
 

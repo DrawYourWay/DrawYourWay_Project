@@ -99,6 +99,8 @@ Whether for quick prototyping or long-term growth, Django is the ideal choice fo
 
 Follow these steps to set up and run the project on your local machine.
 
+# Frontend
+
 ### **Step 1: Clone the Repository And Go To the Right Folder**
 
 ```bash

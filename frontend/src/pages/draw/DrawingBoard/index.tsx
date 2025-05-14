@@ -1,10 +1,9 @@
 import { DrawingMenu } from "@/components";
-import { BasicLayout } from "@/layouts";
-import { Box, Button } from "@chakra-ui/react";
-// import { useState } from "react";
 import { toaster } from "@/components/ui/toaster";
 import { useSaveImage } from "@/hooks/useDrawings";
+import { BasicLayout } from "@/layouts";
 import useDrawingStore from "@/store/useDrawingStore";
+import { Box, Button } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";

@@ -14,6 +14,7 @@ const DrawingBoard = () => {
     mutateAsync: saveImageFunc,
     isPending: savingLoading,
     error: savingError,
+    isSuccess: savingSuccess,
   } = useSaveImage();
 
   const sketchRef = useRef<ReactSketchCanvasRef | null>(null);
@@ -39,8 +40,17 @@ const DrawingBoard = () => {
         duration: 5000,
       });
     }
-  }, [drawingStore, savingError]);
 
+    if (savingSuccess) {
+      toaster.create({
+        title: "Success",
+        description: "Drawing saved successfully",
+        type: "success",
+        duration: 5000,
+      });
+      sketchRef.current?.clearCanvas();
+    }
+  }, [drawingStore, savingError, savingSuccess]);
   const handleSubmit = async () => {
     const image = await sketchRef.current?.exportImage("png");
     if (image) {

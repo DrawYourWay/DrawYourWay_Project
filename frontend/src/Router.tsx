@@ -25,7 +25,6 @@ export const unprotectedRoutes: Route[] = [
     path: "/forget-password",
     element: <ForgetPasswordPage />,
   },
-  { path: "/draw", element: <DrawingBoardPage /> },
 ];
 
 export const protectedRoutes: Route[] = [
@@ -33,4 +32,5 @@ export const protectedRoutes: Route[] = [
     path: "/feed",
     element: <FeedPage />,
   },
+  { path: "/draw", element: <DrawingBoardPage /> },
 ];

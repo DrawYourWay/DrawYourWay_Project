@@ -6,7 +6,6 @@ User = get_user_model()
 
 class Drawing(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="drawings")
-    title = models.CharField(max_length=255)
     image = models.ImageField(upload_to="media/drawings/")
     created_at = models.DateTimeField(auto_now_add=True)
 

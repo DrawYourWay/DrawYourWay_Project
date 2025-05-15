@@ -1,7 +1,7 @@
 import React, { useEffect, useState, ChangeEvent } from 'react';
 import { getFeeds, createFeed, updateFeed, deleteFeed } from '../../../services/feedService';
 import { BasicLayout } from '@/layouts';
-
+import './Feed.css';
 
 interface FeedType {
   id: number;

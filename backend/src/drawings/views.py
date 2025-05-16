@@ -15,3 +15,6 @@ class DrawingListCreateView(ListCreateAPIView):
 class DrawingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):
     queryset = Drawing.objects.all()
     serializer_class = DrawingSerializer
+
+    def get_queryset(self):
+        return super().get_queryset().filter(user=self.request.user)

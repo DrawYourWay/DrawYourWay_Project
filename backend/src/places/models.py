@@ -8,6 +8,6 @@ class Place(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
     description = models.TextField(null=True, blank=True)
-    image = models.ImageField(upload_to="media/places/")
+    image = models.ImageField(upload_to="places/")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

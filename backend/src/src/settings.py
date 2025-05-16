@@ -143,6 +143,8 @@ REST_FRAMEWORK = {
 }
 
 FRONTEND_URL = os.getenv("FRONTEND_URL")
+FORGET_PASSWORD_URL = FRONTEND_URL + "forget-password"
+PLACE_URL = FRONTEND_URL + "login"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.office365.com"

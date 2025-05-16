@@ -43,7 +43,7 @@ class ResetPasswordView(NoPermAuthView):
         token = token_generator.make_token(user)
 
         password_reset_link = (
-            settings.FRONTEND_URL + f"?code={token}&email={user.email}"
+            settings.FORGET_PASSWORD_URL + f"?code={token}&email={user.email}"
         )
 
         send_mail(

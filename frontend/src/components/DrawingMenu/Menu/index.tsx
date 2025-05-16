@@ -14,7 +14,7 @@ const Menu = () => {
         fontFamily="Inter"
         fontStyle="italic"
       >
-        <Text fontSize="sm" fontStyle="italic" userSelect="none">
+        <Text fontSize="sm" fontStyle="italic" userSelect="none" maxW="225px">
           Draw here and when you finish click SUBMIT!
         </Text>
       </HStack>

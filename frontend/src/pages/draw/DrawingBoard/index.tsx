@@ -72,6 +72,9 @@ const DrawingBoard = () => {
         <ReactSketchCanvas
           ref={sketchRef}
           strokeColor={drawingStore.activeColor}
+          style={{
+            height: "450px",
+          }}
         />
         <DrawingMenu />
       </Box>
@@ -88,7 +91,7 @@ const DrawingBoard = () => {
         paddingTop={6}
         paddingBottom={6}
         width="80%"
-        mt={4}
+        m={4}
         fontWeight="bold"
         borderRadius={30}
         onClick={handleSubmit}

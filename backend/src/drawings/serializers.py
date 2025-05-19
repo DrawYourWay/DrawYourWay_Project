@@ -1,7 +1,7 @@
+from drf_extra_fields.fields import Base64ImageField
 from rest_framework import serializers
 
 from .models import Drawing
-from drf_extra_fields.fields import Base64ImageField
 
 
 class DrawingSerializer(serializers.ModelSerializer):
@@ -10,3 +10,9 @@ class DrawingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Drawing
         fields = ["image"]
+
+
+class DrawingPlaceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Drawing
+        fields = ["image", "place"]

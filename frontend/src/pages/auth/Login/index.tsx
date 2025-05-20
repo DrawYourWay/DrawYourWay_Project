@@ -46,7 +46,10 @@ const LoginPage = () => {
     });
 
     if (placeId) {
-      navigate(`/place/${placeId}`);
+      navigate({
+        pathname: "/draw",
+        search: `?place_id=${encodeURIComponent(placeId)}`,
+      });
       return;
     }
     navigate("/feed");

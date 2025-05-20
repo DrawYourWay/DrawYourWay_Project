@@ -1,4 +1,4 @@
-import { GridItem, Image, Box, Heading, Text } from "@chakra-ui/react";
+import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
 
 interface PlaceCardProps {
   qrCodeUrl: string;
@@ -19,12 +19,7 @@ const PlaceCard = ({
 }: PlaceCardProps) => {
   console.log(placeImageUrl);
   return (
-    <GridItem
-      rowSpan={1}
-      margin="auto"
-      justifyContent="center"
-      alignItems="center"
-    >
+    <GridItem>
       <Box textAlign="center" marginBottom={20}>
         <Box color="black">
           <Heading color="black" as="h1">

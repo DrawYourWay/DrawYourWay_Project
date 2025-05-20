@@ -1,3 +1,8 @@
+export interface PlaceDrawing {
+  place: number;
+  image: string;
+}
+
 export interface PlaceResponse {
   id: number;
   qr_code: string;
@@ -10,4 +15,5 @@ export interface PlaceResponse {
   image: string;
   created_at: string;
   updated_at: string;
+  drawings: PlaceDrawing[];
 }

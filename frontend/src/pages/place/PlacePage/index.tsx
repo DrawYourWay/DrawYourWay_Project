@@ -21,6 +21,7 @@ const PlacePage = () => {
   useEffect(() => {
     const fetchPlace = async () => {
       const place = await getPlace(Number(placeId));
+      console.log(place);
       setPlace(place);
       console.log(place);
     };
@@ -30,8 +31,8 @@ const PlacePage = () => {
   return (
     <ColorLayout>
       {place && placeId && (
-        <Grid templateRows="repeat(3, 1fr)" h="100%" w="100%">
-          <PlaceCard
+        <>
+          {/* <PlaceCard
             qrCodeUrl={place?.qr_code}
             placeImageUrl={place?.image}
             placeName={place?.place_name}
@@ -40,9 +41,9 @@ const PlacePage = () => {
             country={place?.country}
             longitude={place?.longitude}
             latitude={place?.latidude}
-          />
-          <PlaceDrawings placeId={placeId} />
-        </Grid>
+          /> */}
+          <PlaceDrawings placeId={placeId} drawings={place.drawings} />
+        </>
       )}
     </ColorLayout>
   );

@@ -3,6 +3,11 @@ import { useMutation } from "@tanstack/react-query";
 
 export const useSaveImage = () =>
   useMutation({
-    mutationFn: async ({ image }: { image: string }) =>
-      await saveDrawing(image),
+    mutationFn: async ({
+      image,
+      placeId,
+    }: {
+      image: string;
+      placeId: string;
+    }) => await saveDrawing(image, placeId),
   });

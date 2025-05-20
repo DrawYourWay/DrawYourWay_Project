@@ -6,6 +6,7 @@ import useDrawingStore from "@/store/useDrawingStore";
 import { Box, Button } from "@chakra-ui/react";
 import { AxiosError } from "axios";
 import { useEffect, useRef } from "react";
+import { useLocation, useNavigate } from "react-router";
 import { ReactSketchCanvas, ReactSketchCanvasRef } from "react-sketch-canvas";
 
 const DrawingBoard = () => {
@@ -19,7 +20,15 @@ const DrawingBoard = () => {
   const sketchRef = useRef<ReactSketchCanvasRef | null>(null);
   const drawingStore = useDrawingStore();
 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const placeId = searchParams.get("place_id");
+  console.log("placeId", placeId);
+
   useEffect(() => {
+    if (!placeId) navigate("/feed");
+
     if (drawingStore.activeTool == "eraser" && sketchRef.current) {
       sketchRef.current?.eraseMode(true);
     } else {
@@ -48,12 +57,13 @@ const DrawingBoard = () => {
         duration: 5000,
       });
       sketchRef.current?.clearCanvas();
+      navigate(`/place/${placeId}`);
     }
-  }, [drawingStore, savingError, savingSuccess]);
+  }, [drawingStore, savingError, savingSuccess, placeId]);
   const handleSubmit = async () => {
     const image = await sketchRef.current?.exportImage("png");
-    if (image) {
-      saveImageFunc({ image });
+    if (image && placeId) {
+      saveImageFunc({ image, placeId });
     }
   };
 

@@ -4,9 +4,13 @@ import qrcode
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
+from drawings.models import Drawing
 from places.models import Place
 from qr_codes.models import QrCode
 from src import settings
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 class Command(BaseCommand):
@@ -20,6 +24,7 @@ class Command(BaseCommand):
         parser.add_argument("--longitude", type=float, default=-8.61099)
         parser.add_argument("--description", type=str, default="ISEP is a school")
         parser.add_argument("--image", type=str, default="media/places/isep.png")
+        parser.add_argument("--drawing", type=str, default="media/drawings/isep.png")
 
     def handle(self, *args, **options):
         image_path = options["image"]
@@ -36,7 +41,6 @@ class Command(BaseCommand):
             new_place.save()
 
         url = settings.PLACE_URL + f"?place_id={new_place.pk}"
-        print(url)
 
         qr_code_img = qrcode.make(url)
         buffer = io.BytesIO()
@@ -45,3 +49,11 @@ class Command(BaseCommand):
 
         new_qr_code = QrCode(image=qr_code_file, place=new_place)
         new_qr_code.save()
+
+        drawing_path = options["drawing"]
+        with open(drawing_path, "rb") as drawing_file:
+            new_drawing = Drawing(user=User.objects.get(pk=1), place=new_place)
+            new_drawing.image.save(
+                drawing_path.split("/")[-1], File(drawing_file), save=False
+            )
+            new_drawing.save()

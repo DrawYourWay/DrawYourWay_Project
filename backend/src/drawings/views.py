@@ -9,7 +9,8 @@ class DrawingListCreateView(ListCreateAPIView):
     serializer_class = DrawingSerializer
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        place_id = self.request.data.get("place_id")
+        serializer.save(user=self.request.user, place_id=place_id)
 
 
 class DrawingRetrieveUpdateDestroyView(RetrieveUpdateDestroyAPIView):

@@ -1,5 +1,6 @@
 import { PlaceDrawing } from "@/types/places/place";
-import { Grid, GridItem, Image, Box } from "@chakra-ui/react";
+import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
 
 interface PlaceDrawingsProps {
   placeId: string;
@@ -7,21 +8,42 @@ interface PlaceDrawingsProps {
 }
 
 const PlaceDrawings = ({ placeId, drawings }: PlaceDrawingsProps) => {
+  const placeWebsocketUrl = `${import.meta.env.VITE_WEBSOCKET_URL}/places/${placeId}/`;
+  const [placeWebsocket, setPlaceWebsocket] = useState<WebSocket | null>(null);
+
   const items: (PlaceDrawing | null)[] = [...drawings];
-  while (items.length < 15) {
+  while (items.length < 30) {
     items.push(null);
   }
 
+  useEffect(() => {
+    const websocket = new WebSocket(placeWebsocketUrl);
+    setPlaceWebsocket(websocket);
+
+    websocket.onopen = () => {
+      console.log("WebSocket connection opened");
+    };
+
+    websocket.onmessage = (event) => {
+      // obsługa wiadomości
+    };
+
+    websocket.onclose = () => {
+      console.log("WebSocket connection closed");
+    };
+
+    return () => {
+      websocket.close();
+    };
+  }, [placeWebsocketUrl]);
+
   return (
     <Grid
-      templateColumns="repeat(5, 1fr)"
-      templateRows="repeat(3, 1fr)"
-      gap={4}
+      templateColumns="repeat(6, 1fr)"
+      templateRows="repeat(5, 1fr)"
+      gap={0}
       width="100%"
       height="100%"
-      justifyItems="center"
-      alignItems="center"
-      margin="auto"
     >
       {items.map((drawing, idx) => (
         <GridItem
@@ -29,20 +51,22 @@ const PlaceDrawings = ({ placeId, drawings }: PlaceDrawingsProps) => {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          border="solid 1px"
+          borderColor="black"
         >
           {drawing ? (
             <Image
               src={drawing.image}
               alt={`Drawing ${drawing.place} for place ${placeId}`}
-              width="200px"
-              height="200px"
+              width="100%"
+              height="100%"
               objectFit="contain"
               background="white"
             />
           ) : (
             <Box
-              width="200px"
-              height="200px"
+              width="100%"
+              height="100%"
               background="gray.100"
               borderRadius="md"
             />

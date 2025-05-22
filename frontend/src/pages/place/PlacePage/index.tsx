@@ -31,19 +31,14 @@ const PlacePage = () => {
   return (
     <ColorLayout>
       {place && placeId && (
-        <>
-          {/* <PlaceCard
+        <Grid templateColumns="1fr 3fr" height="100vh" width="100vw" gap={0}>
+          <PlaceCard
             qrCodeUrl={place?.qr_code}
             placeImageUrl={place?.image}
             placeName={place?.place_name}
-            description={place?.description}
-            city={place?.city}
-            country={place?.country}
-            longitude={place?.longitude}
-            latitude={place?.latidude}
-          /> */}
+          />
           <PlaceDrawings placeId={placeId} drawings={place.drawings} />
-        </>
+        </Grid>
       )}
     </ColorLayout>
   );

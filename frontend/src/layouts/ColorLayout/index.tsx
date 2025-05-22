@@ -6,7 +6,7 @@ interface ColorLayoutProps {
 
 const ColorLayout = ({ children }: ColorLayoutProps) => {
   return (
-    <HStack minH="100vh" minW="100vw" backgroundColor="main">
+    <HStack minH="100vh" minW="100vw" backgroundColor="deepDarkGray">
       {children}
     </HStack>
   );

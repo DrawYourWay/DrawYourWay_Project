@@ -1,32 +1,29 @@
-import { Box, GridItem, Heading, Image, Text } from "@chakra-ui/react";
+import { Box, GridItem, Heading, Image } from "@chakra-ui/react";
 
 interface PlaceCardProps {
   qrCodeUrl: string;
   placeImageUrl: string;
   placeName: string;
-  description: string;
-  city: string;
-  country: string;
-  longitude: number;
-  latitude: number;
 }
 
-const PlaceCard = ({
-  qrCodeUrl,
-  placeImageUrl,
-  placeName,
-  description,
-}: PlaceCardProps) => {
-  console.log(placeImageUrl);
+const PlaceCard = ({ qrCodeUrl, placeImageUrl, placeName }: PlaceCardProps) => {
   return (
-    <GridItem>
+    <GridItem
+      color="white"
+      display="flex"
+      flexDir="column"
+      justifyContent="center"
+      alignItems="center"
+    >
       <Box textAlign="center" marginBottom={20}>
-        <Box color="black">
-          <Heading color="black" as="h1">
-            {placeName}
-          </Heading>
-          <Text>{description}</Text>
-        </Box>
+        <Heading
+          as="h2"
+          fontFamily="armstrong"
+          fontSize={["4xl"]}
+          marginBottom={5}
+        >
+          {placeName}
+        </Heading>
         <Box>
           <Image
             src={placeImageUrl}
@@ -36,6 +33,15 @@ const PlaceCard = ({
           />
         </Box>
       </Box>
+      <Heading
+        as="h2"
+        textAlign="center"
+        fontFamily="armstrong"
+        fontSize={["4xl"]}
+        marginBottom={5}
+      >
+        SCAN AND DRAW
+      </Heading>
       <Box>
         <Image src={qrCodeUrl} alt="QR Code" width={250} height={250} />
       </Box>

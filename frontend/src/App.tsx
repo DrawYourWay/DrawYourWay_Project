@@ -3,6 +3,7 @@ import { ProtectedRoute, UnprotectedRoute } from "./components";
 import { Toaster } from "./components/ui/toaster";
 import Providers from "./Providers";
 import { protectedRoutes, unprotectedRoutes } from "./Router";
+import { Navigate } from "react-router";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
             }
           />
         ))}
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </Providers>
   );

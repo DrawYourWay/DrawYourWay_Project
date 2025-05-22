@@ -17,3 +17,7 @@ export interface PlaceResponse {
   updated_at: string;
   drawings: PlaceDrawing[];
 }
+
+export interface PlaceDrawingsUrls {
+  data: string[];
+}

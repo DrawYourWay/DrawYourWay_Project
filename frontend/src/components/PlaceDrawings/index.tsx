@@ -1,17 +1,19 @@
-import { PlaceDrawing } from "@/types/places/place";
+import { PlaceDrawing, PlaceDrawingsUrls } from "@/types/places/place";
 import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
 import { useState, useEffect } from "react";
 
 interface PlaceDrawingsProps {
   placeId: string;
-  drawings: PlaceDrawing[];
 }
 
-const PlaceDrawings = ({ placeId, drawings }: PlaceDrawingsProps) => {
+const PlaceDrawings = ({ placeId }: PlaceDrawingsProps) => {
   const placeWebsocketUrl = `${import.meta.env.VITE_WEBSOCKET_URL}/places/${placeId}/`;
   const [placeWebsocket, setPlaceWebsocket] = useState<WebSocket | null>(null);
 
-  const items: (PlaceDrawing | null)[] = [...drawings];
+  const [drawings, setDrawings] = useState(null);
+
+  // const items: (PlaceDrawing | null)[] = [...drawings];
+  const items: null[] = [];
   while (items.length < 30) {
     items.push(null);
   }
@@ -20,12 +22,14 @@ const PlaceDrawings = ({ placeId, drawings }: PlaceDrawingsProps) => {
     const websocket = new WebSocket(placeWebsocketUrl);
     setPlaceWebsocket(websocket);
 
-    websocket.onopen = () => {
-      console.log("WebSocket connection opened");
-    };
+    websocket.onopen = () => {};
 
     websocket.onmessage = (event) => {
-      // obsługa wiadomości
+      const eventDrawings: PlaceDrawingsUrls = JSON.parse(event.data);
+      const formatedEventDrawings: string[] = eventDrawings.data.map(
+        (drawing) => `${import.meta.env.VITE_BACKEND_URL}${drawing}`
+      );
+      console.log(formatedEventDrawings);
     };
 
     websocket.onclose = () => {

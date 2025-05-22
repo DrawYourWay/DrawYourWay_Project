@@ -12,4 +12,4 @@ class Drawing(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return str(self.created_at)

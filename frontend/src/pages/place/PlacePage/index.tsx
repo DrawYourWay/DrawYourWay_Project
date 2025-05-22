@@ -20,10 +20,7 @@ const PlacePage = () => {
 
   useEffect(() => {
     const fetchPlace = async () => {
-      const place = await getPlace(Number(placeId));
-      console.log(place);
-      setPlace(place);
-      console.log(place);
+      setPlace(await getPlace(Number(placeId)));
     };
     fetchPlace();
   }, []);
@@ -37,7 +34,7 @@ const PlacePage = () => {
             placeImageUrl={place?.image}
             placeName={place?.place_name}
           />
-          <PlaceDrawings placeId={placeId} drawings={place.drawings} />
+          <PlaceDrawings placeId={placeId} />
         </Grid>
       )}
     </ColorLayout>

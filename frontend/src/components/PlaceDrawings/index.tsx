@@ -1,6 +1,6 @@
-import { PlaceDrawing, PlaceDrawingsUrls } from "@/types/places/place";
+import { PlaceDrawingsUrls } from "@/types/places/place";
 import { Box, Grid, GridItem, Image } from "@chakra-ui/react";
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface PlaceDrawingsProps {
   placeId: string;
@@ -8,36 +8,50 @@ interface PlaceDrawingsProps {
 
 const PlaceDrawings = ({ placeId }: PlaceDrawingsProps) => {
   const placeWebsocketUrl = `${import.meta.env.VITE_WEBSOCKET_URL}/places/${placeId}/`;
+
   const [placeWebsocket, setPlaceWebsocket] = useState<WebSocket | null>(null);
+  const wsRef = useRef<WebSocket | null>(null);
 
-  const [drawings, setDrawings] = useState(null);
+  const [drawings, setDrawings] = useState<(string | null)[]>([]);
 
-  // const items: (PlaceDrawing | null)[] = [...drawings];
-  const items: null[] = [];
-  while (items.length < 30) {
-    items.push(null);
-  }
+  const setUpDrawings = (eventDDrawings: PlaceDrawingsUrls) => {
+    const formattedDrawings: (string | null)[] = eventDDrawings.data.map(
+      (drawing) => `${import.meta.env.VITE_BACKEND_URL}${drawing}`
+    );
+    while (formattedDrawings.length < 30) {
+      formattedDrawings.push(null);
+    }
+    setDrawings(formattedDrawings);
+  };
 
   useEffect(() => {
-    const websocket = new WebSocket(placeWebsocketUrl);
-    setPlaceWebsocket(websocket);
+    if (!wsRef.current || wsRef.current.readyState === WebSocket.CLOSED) {
+      const ws = new WebSocket(placeWebsocketUrl);
+      wsRef.current = ws;
+      setPlaceWebsocket(ws);
 
-    websocket.onopen = () => {};
+      ws.onopen = () => {
+        console.log("WebSocket connected");
+      };
 
-    websocket.onmessage = (event) => {
-      const eventDrawings: PlaceDrawingsUrls = JSON.parse(event.data);
-      const formatedEventDrawings: string[] = eventDrawings.data.map(
-        (drawing) => `${import.meta.env.VITE_BACKEND_URL}${drawing}`
-      );
-      console.log(formatedEventDrawings);
-    };
+      ws.onmessage = (event) => {
+        setUpDrawings(JSON.parse(event.data));
+      };
 
-    websocket.onclose = () => {
-      console.log("WebSocket connection closed");
-    };
+      ws.onclose = () => {
+        console.log("WebSocket closed");
+      };
+
+      ws.onerror = (err) => {
+        console.error("WebSocket error:", err);
+      };
+    }
 
     return () => {
-      websocket.close();
+      if (wsRef.current && wsRef.current.readyState === WebSocket.OPEN) {
+        wsRef.current.close();
+        console.log("WebSocket cleanup: closed");
+      }
     };
   }, [placeWebsocketUrl]);
 
@@ -49,9 +63,9 @@ const PlaceDrawings = ({ placeId }: PlaceDrawingsProps) => {
       width="100%"
       height="100%"
     >
-      {items.map((drawing, idx) => (
+      {drawings.map((drawing, idx) => (
         <GridItem
-          key={drawing?.image || idx}
+          key={drawing || idx}
           display="flex"
           alignItems="center"
           justifyContent="center"
@@ -60,8 +74,8 @@ const PlaceDrawings = ({ placeId }: PlaceDrawingsProps) => {
         >
           {drawing ? (
             <Image
-              src={drawing.image}
-              alt={`Drawing ${drawing.place} for place ${placeId}`}
+              src={drawing}
+              alt={`Drawing ${drawing} for place ${placeId}`}
               width="100%"
               height="100%"
               objectFit="contain"

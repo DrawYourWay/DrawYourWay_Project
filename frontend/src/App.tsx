@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router";
-import { ProtectedRoute, UnprotectedRoute } from "./components";
+import { ProtectedRoute, UnprotectedRoute, AdminRoute } from "./components";
 import { Toaster } from "./components/ui/toaster";
 import Providers from "./Providers";
-import { protectedRoutes, unprotectedRoutes } from "./Router";
+import { adminRoutes, protectedRoutes, unprotectedRoutes } from "./Router";
 import { Navigate } from "react-router";
 
 function App() {
@@ -28,6 +28,17 @@ function App() {
                 <Toaster />
                 {route.element}
               </ProtectedRoute>
+            }
+          />
+        ))}
+        {adminRoutes.map((route) => (
+          <Route
+            path={route.path}
+            element={
+              <AdminRoute>
+                <Toaster />
+                {route.element}
+              </AdminRoute>
             }
           />
         ))}

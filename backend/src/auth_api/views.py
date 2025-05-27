@@ -1,12 +1,15 @@
 from django.conf import settings
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
+from django.db.utils import IntegrityError
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 from .serializers import (
+    CustomTokenObtainPairSerializer,
     NewPasswordSerializer,
     RegisterSerializer,
     ResetPasswordSerializer,
@@ -24,7 +27,25 @@ class RegisterApiView(NoPermAuthView):
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        serializer.save()
+        try:
+            serializer.save()
+        except IntegrityError as e:
+            if "email" in str(e):
+                return Response(
+                    {"detail": "User with this email already exists"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            elif "username" in str(e):
+                return Response(
+                    {"detail": "User with this username already exists"},
+                    status=status.HTTP_400_BAD_REQUEST,
+                )
+            else:
+                return Response(
+                    {"detail": "An unexpected error occurred"},
+                    status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                )
+
         return Response(
             {"message": "User registered successfully"},
             status=status.HTTP_201_CREATED,
@@ -73,3 +94,7 @@ class ChangePasswordView(NoPermAuthView):
             {"message": "Password changed successfully"},
             status=status.HTTP_200_OK,
         )
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer

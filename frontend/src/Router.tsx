@@ -6,6 +6,7 @@ import {
   LoginPage,
   RegisterPage,
   PlacePage,
+  NewPlacePage,
 } from "./pages";
 
 interface Route {
@@ -35,4 +36,11 @@ export const protectedRoutes: Route[] = [
   },
   { path: "/draw", element: <DrawingBoardPage /> },
   { path: "/place/:placeId", element: <PlacePage /> },
+];
+
+export const adminRoutes: Route[] = [
+  {
+    path: "/admin/new-place",
+    element: <NewPlacePage />,
+  },
 ];

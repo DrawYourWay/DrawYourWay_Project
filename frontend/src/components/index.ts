@@ -1,3 +1,4 @@
+export { default as AdminRoute } from "./AdminRoute";
 export { DrawingMenu } from "./DrawingMenu";
 export { default as PageHeader } from "./PageHeader";
 export { default as PlaceCard } from "./PlaceCard";

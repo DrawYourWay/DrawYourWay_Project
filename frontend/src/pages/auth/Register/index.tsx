@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 
 interface RegisterForm {
   email: string;
@@ -26,6 +26,12 @@ const RegisterPage = () => {
 
   const { mutateAsync, error, isPending } = useRegister();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const searchParams = new URLSearchParams(location.search);
+  const placeId = searchParams.get("place_id");
+
+  console.log(placeId);
 
   const onSubmit = handleSubmit(async (data) => {
     await mutateAsync({
@@ -34,7 +40,18 @@ const RegisterPage = () => {
       password: data.password,
       password_confirm: data.password2,
     });
-    navigate("/login", { state: { welcome: true } });
+
+    if (placeId) {
+      navigate(
+        {
+          pathname: "/login",
+          search: `?place_id=${encodeURIComponent(placeId)}`,
+        },
+        { state: { welcome: true } }
+      );
+    } else {
+      navigate("/login", { state: { welcome: true } });
+    }
   });
 
   useEffect(() => {

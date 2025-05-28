@@ -85,7 +85,11 @@ const LoginPage = () => {
       <PageHeader
         subtitle="Log in"
         preforwardText="Don't have an account?"
-        forwardLink="/register"
+        forwardLink={
+          placeId
+            ? `/register?place_id=${encodeURIComponent(placeId)}`
+            : "/register"
+        }
       />
 
       <form onSubmit={onSubmit} style={{ width: "100%", maxWidth: "300px" }}>

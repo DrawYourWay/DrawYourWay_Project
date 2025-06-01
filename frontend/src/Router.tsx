@@ -1,12 +1,13 @@
 import { Route } from "react-router";
 import {
+  AllPlacesPage,
   DrawingBoardPage,
-  FeedPage,
+  // FeedPage,
   ForgetPasswordPage,
   LoginPage,
-  RegisterPage,
-  PlacePage,
   NewPlacePage,
+  PlacePage,
+  RegisterPage,
 } from "./pages";
 
 interface Route {
@@ -30,9 +31,13 @@ export const unprotectedRoutes: Route[] = [
 ];
 
 export const protectedRoutes: Route[] = [
+  // {
+  //   path: "/feed",
+  //   element: <FeedPage />,
+  // },
   {
-    path: "/feed",
-    element: <FeedPage />,
+    path: "/places",
+    element: <AllPlacesPage />,
   },
   { path: "/draw", element: <DrawingBoardPage /> },
   { path: "/place/:placeId", element: <PlacePage /> },

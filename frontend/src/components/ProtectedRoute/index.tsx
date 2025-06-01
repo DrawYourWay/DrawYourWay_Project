@@ -19,11 +19,22 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
     let refreshInterval: NodeJS.Timeout;
 
     const initAuth = async () => {
-      const token = AuthService.getToken(AuthService.accessTokenKey);
-      if (!token) {
+      const token = AuthService.getToken(AuthService.accessTokenKey),
+        renewToken = AuthService.getToken(AuthService.refreshTokenKey);
+
+      if (!token && !renewToken) {
         setIsLoading(false);
         navigate("/login");
         return;
+      } else if (renewToken && !token) {
+        try {
+          await refreshToken();
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        } catch (_) {
+          console.warn("Token refresh failed, redirecting to login");
+          setIsLoading(false);
+          navigate("/login");
+        }
       }
 
       try {

@@ -52,7 +52,7 @@ const LoginPage = () => {
       });
       return;
     }
-    navigate("/feed");
+    navigate("/places");
   });
 
   useEffect(() => {

@@ -18,6 +18,13 @@ export interface PlaceResponse {
   drawings: PlaceDrawing[];
 }
 
+export interface Places {
+  count: number;
+  next: string | null;
+  previous: string | null;
+  results: PlaceResponse[];
+}
+
 export interface PlaceDrawingsUrls {
   data: string[];
 }

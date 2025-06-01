@@ -18,7 +18,7 @@ const UnprotectedRoute = ({ children }: UnprotectedRouteProps) => {
     const checkToken = async () => {
       try {
         await mutateAsync();
-        navigate("/feed");
+        navigate("/places");
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
         AuthService.deleteToken(AuthService.accessTokenKey);

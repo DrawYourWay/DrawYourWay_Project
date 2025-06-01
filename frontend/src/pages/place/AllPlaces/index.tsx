@@ -1,6 +1,8 @@
+import { PlaceShowcaseCard } from "@/components";
 import { useAllPlaces } from "@/hooks/usePlace";
 import { ColorLayout } from "@/layouts";
 import { PlaceResponse } from "@/types/places/place";
+import { Box, Grid, Heading } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 
 const AllPlaces = () => {
@@ -22,7 +24,38 @@ const AllPlaces = () => {
 
   return (
     <ColorLayout color="main">
-      <h1>All Places</h1>
+      <Box
+        w="100%"
+        h="100%"
+        display="flex"
+        flexDir="column"
+        alignItems="center"
+        justifyContent="center"
+      >
+        <Heading
+          fontFamily="armstrong"
+          color="black"
+          as="h1"
+          fontSize={["2xl", "3xl"]}
+          textAlign="center"
+          mb={4}
+          mt={4}
+        >
+          Draw Your Way Here!
+        </Heading>
+        <Grid
+          w="100%"
+          h="100%"
+          templateColumns="repeat(2, 1fr)"
+          maxW="600px"
+          gap={4}
+          p={4}
+        >
+          {places?.map((place, indx) => (
+            <PlaceShowcaseCard key={indx} place={place} />
+          ))}
+        </Grid>
+      </Box>
     </ColorLayout>
   );
 };

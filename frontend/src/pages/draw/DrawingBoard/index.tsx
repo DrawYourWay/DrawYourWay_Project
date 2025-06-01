@@ -27,7 +27,7 @@ const DrawingBoard = () => {
   console.log("placeId", placeId);
 
   useEffect(() => {
-    if (!placeId) navigate("/feed");
+    if (!placeId) navigate("/places");
 
     if (drawingStore.activeTool == "eraser" && sketchRef.current) {
       sketchRef.current?.eraseMode(true);

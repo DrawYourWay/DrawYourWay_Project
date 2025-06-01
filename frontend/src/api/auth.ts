@@ -1,5 +1,5 @@
 import { client } from "./client";
-import { AuthTokens, ResetPasswordToken } from "../types/api/auth";
+import { AuthTokens, ResetPasswordToken, AccessToken } from "../types/api/auth";
 
 export const login = (
   username: string,
@@ -10,6 +10,11 @@ export const login = (
       username,
       password,
     })
+    .then((response) => response.data);
+
+export const refresh = (refreshToken: string): Promise<AccessToken> =>
+  client
+    .post("/auth/refresh/", { refresh: refreshToken })
     .then((response) => response.data);
 
 export const register = (

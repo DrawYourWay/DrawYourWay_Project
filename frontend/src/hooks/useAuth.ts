@@ -4,6 +4,7 @@ import {
   changePassword,
   login,
   logOut,
+  refresh,
   register,
   resetPassword,
   verify,
@@ -20,6 +21,18 @@ export const useLogin = () =>
     }) => {
       const tokens = await login(username, password);
       AuthService.setTokens(tokens.access, tokens.refresh);
+    },
+  });
+
+export const useRefresh = () =>
+  useMutation({
+    mutationFn: async () => {
+      const refreshToken = AuthService.getToken(AuthService.refreshTokenKey);
+      if (!refreshToken) {
+        throw new Error("No refresh token found");
+      }
+      const { access } = await refresh(refreshToken);
+      AuthService.setTokens(access, refreshToken);
     },
   });
 

@@ -1,4 +1,4 @@
-import { useVerify } from "@/hooks/useAuth";
+import { useRefresh, useVerify } from "@/hooks/useAuth";
 import AuthService from "@/services/TokenService";
 import { AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
@@ -11,14 +11,34 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
   const [isLoading, setIsLoading] = useState(true);
-  const { mutateAsync } = useVerify();
+  const { mutateAsync: verifyToken } = useVerify();
+  const { mutateAsync: refreshToken } = useRefresh();
   const navigate = useNavigate();
 
   useEffect(() => {
-    const checkToken = async () => {
-      try {
-        await mutateAsync();
+    let refreshInterval: NodeJS.Timeout;
+
+    const initAuth = async () => {
+      const token = AuthService.getToken(AuthService.accessTokenKey);
+      if (!token) {
         setIsLoading(false);
+        navigate("/login");
+        return;
+      }
+
+      try {
+        await verifyToken();
+        setIsLoading(false);
+
+        refreshInterval = setInterval(async () => {
+          try {
+            await refreshToken();
+          } catch (e) {
+            console.warn("Token refresh failed", e);
+            clearInterval(refreshInterval);
+            navigate("/login");
+          }
+        }, 60_000);
         // eslint-disable-next-line @typescript-eslint/no-unused-vars
       } catch (_) {
         setIsLoading(false);
@@ -26,14 +46,12 @@ const ProtectedRoute = ({ children }: ProtectedRouteProps) => {
       }
     };
 
-    if (AuthService.getToken(AuthService.accessTokenKey)) {
-      checkToken();
-    } else {
-      setIsLoading(false);
-      navigate("/login");
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    initAuth();
+
+    return () => {
+      if (refreshInterval) clearInterval(refreshInterval);
+    };
+  }, [navigate, verifyToken, refreshToken]);
 
   return (
     <>

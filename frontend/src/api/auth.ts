@@ -39,9 +39,7 @@ export const verify = (token: string) =>
   client.post("/auth/verify/", { token }).then((response) => response.data);
 
 export const resetPassword = (email: string): Promise<ResetPasswordToken> =>
-  client
-    .post("/auth/reset-password/", { email })
-    .then((response) => response.data);
+  client.post("/auth/reset-password/", email).then((response) => response.data);
 
 export const changePassword = (
   email: string,

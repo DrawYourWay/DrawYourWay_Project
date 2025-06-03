@@ -12,8 +12,8 @@ const PlaceCard = ({ qrCodeUrl, placeImageUrl, placeName }: PlaceCardProps) => {
       color="white"
       display="flex"
       flexDir="column"
-      justifyContent="center"
-      alignItems="start"
+      justifyContent="start"
+      alignItems="center"
       width="100%"
       height="100%"
     >

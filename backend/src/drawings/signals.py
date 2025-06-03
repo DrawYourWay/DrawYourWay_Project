@@ -8,7 +8,6 @@ from .models import Drawing
 
 @receiver(post_save, sender=Drawing)
 def drawing_saved(sender, instance, created, **kwargs):
-    print("SYGNAL")
     channel_layer = get_channel_layer()
     group_name = f"place_{instance.place.id}"
     async_to_sync(channel_layer.group_send)(

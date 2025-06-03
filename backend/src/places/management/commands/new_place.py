@@ -1,6 +1,7 @@
 import io
 
 import qrcode
+from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.files.base import ContentFile
 from django.core.management.base import BaseCommand
@@ -8,7 +9,6 @@ from drawings.models import Drawing
 from places.models import Place
 from qr_codes.models import QrCode
 from src import settings
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -27,6 +27,12 @@ class Command(BaseCommand):
         parser.add_argument("--drawing", type=str, default="media/drawings/isep.png")
 
     def handle(self, *args, **options):
+        admin_user = User.objects.create(
+            username="admin", email="admin@admin.pl", is_staff=True, is_superuser=True
+        )
+        admin_user.set_password("admin")
+        admin_user.save()
+
         image_path = options["image"]
         with open(image_path, "rb") as img_file:
             new_place = Place(

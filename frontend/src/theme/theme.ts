@@ -9,11 +9,12 @@ const config = defineConfig({
         link: { value: "#052DD6" },
         lightGray: { value: "rgba(217, 217, 217, 0.41)" },
         darkGray: { value: "#525252" },
+        deepDarkGray: { value: "#4d4d4d" },
       },
-      // fonts: {
-      //   armstrong: { value: "'Armstrong', sans-serif" },
-      //   inter: { value: "'Inter', sans-serif" },
-      // },
+      fonts: {
+        armstrong: { value: "'Armstrong', sans-serif" },
+        inter: { value: "'Inter', sans-serif" },
+      },
     },
   },
 });

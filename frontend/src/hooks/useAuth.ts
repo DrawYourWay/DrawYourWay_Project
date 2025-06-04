@@ -60,8 +60,7 @@ export const useLogout = () =>
 
 export const usePasswordReset = () =>
   useMutation({
-    mutationFn: async ({ email }: { email: string }) =>
-      await resetPassword(email),
+    mutationFn: async (email: string) => await resetPassword(email),
   });
 
 export const useChangePassword = () =>

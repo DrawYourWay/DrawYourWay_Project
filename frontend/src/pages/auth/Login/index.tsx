@@ -29,6 +29,9 @@ const LoginPage = () => {
   const { welcome: shouldWelcome, passwordReset: isResetPassword } =
     location.state || {};
 
+  const searchParams = new URLSearchParams(location.search);
+  const placeId = searchParams.get("place_id");
+
   const onSubmit = handleSubmit(async (data) => {
     if (location.state?.welcome) {
       location.state.welcome = false;
@@ -41,6 +44,14 @@ const LoginPage = () => {
       username: data.username,
       password: data.password,
     });
+
+    if (placeId) {
+      navigate({
+        pathname: "/draw",
+        search: `?place_id=${encodeURIComponent(placeId)}`,
+      });
+      return;
+    }
     navigate("/feed");
   });
 

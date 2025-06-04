@@ -5,6 +5,7 @@ import {
   ForgetPasswordPage,
   LoginPage,
   RegisterPage,
+  PlacePage,
 } from "./pages";
 
 interface Route {
@@ -25,7 +26,6 @@ export const unprotectedRoutes: Route[] = [
     path: "/forget-password",
     element: <ForgetPasswordPage />,
   },
-  { path: "/draw", element: <DrawingBoardPage /> },
 ];
 
 export const protectedRoutes: Route[] = [
@@ -33,4 +33,6 @@ export const protectedRoutes: Route[] = [
     path: "/feed",
     element: <FeedPage />,
   },
+  { path: "/draw", element: <DrawingBoardPage /> },
+  { path: "/place/:placeId", element: <PlacePage /> },
 ];
